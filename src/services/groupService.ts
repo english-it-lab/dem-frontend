@@ -37,10 +37,13 @@ export const createGroup = async (data: GroupCreateData) => {
 };
 
 export const updateGroup = async (groupId: number, data: GroupUpdateData) => {
-  const response = await instance.put<GroupApiResponse>(`/groups/${groupId}`, {
-    name: data.name,
-    section_id: data.sectionId,
-  });
+  const response = await instance.patch<GroupApiResponse>(
+    `/groups/${groupId}`,
+    {
+      name: data.name,
+      section_id: data.sectionId,
+    },
+  );
 
   return mapGroupFromApi(response.data);
 };
