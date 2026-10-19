@@ -1,8 +1,9 @@
-type RuntimeConfig = {
-  VITE_API_BASE_URL?: string;
-  VITE_ADMIN_PAGE_ENABLED?: string;
-  VITE_AUTH_ENABLED?: string;
-};
+type RuntimeConfigKey =
+  | "VITE_API_BASE_URL"
+  | "VITE_ADMIN_PAGE_ENABLED"
+  | "VITE_AUTH_ENABLED";
+
+type RuntimeConfig = Partial<Record<RuntimeConfigKey, string>>;
 
 const runtimeConfig = (
   globalThis as typeof globalThis & {
@@ -10,20 +11,26 @@ const runtimeConfig = (
   }
 ).__APP_CONFIG__;
 
-const runtimeApiBaseUrl = runtimeConfig?.VITE_API_BASE_URL?.trim();
+/**
+ * Runtime config (`config.js`, substituted at container start) wins over the
+ * build-time Vite env. Empty strings count as "not set" so an unset variable in
+ * the container falls back to the build-time value and then to the default.
+ */
+const readSetting = (key: RuntimeConfigKey): string | undefined => {
+  const runtimeValue = runtimeConfig?.[key]?.trim();
 
-export const apiBaseUrl =
-  runtimeApiBaseUrl ||
-  import.meta.env.VITE_API_BASE_URL ||
-  "http://localhost:8000/api/v1";
+  if (runtimeValue) {
+    return runtimeValue;
+  }
 
-const adminPageEnabledValue =
-  runtimeConfig?.VITE_ADMIN_PAGE_ENABLED ??
-  import.meta.env.VITE_ADMIN_PAGE_ENABLED;
+  const buildValue = (import.meta.env[key] as string | undefined)?.trim();
 
-export const adminPageEnabled = adminPageEnabledValue === "true";
+  return buildValue || undefined;
+};
 
-const authEnabledValue =
-  runtimeConfig?.VITE_AUTH_ENABLED ?? import.meta.env.VITE_AUTH_ENABLED;
+export const apiBaseUrl = readSetting("VITE_API_BASE_URL") ?? "/api/v1";
 
-export const authEnabled = authEnabledValue !== "false";
+export const adminPageEnabled =
+  readSetting("VITE_ADMIN_PAGE_ENABLED") === "true";
+
+export const authEnabled = readSetting("VITE_AUTH_ENABLED") !== "false";

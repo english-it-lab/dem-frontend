@@ -10,9 +10,9 @@ const PATHS = {
   ADMIN_USERS: "/admin/users",
   ROLES: "/roles",
   EVENTS: "/events",
-  POLICY:"/policy",
-  TERMS:"/terms",
-  EVENT: "/event/:eventId"
+  POLICY: "/policy",
+  TERMS: "/terms",
+  EVENT: "/event/:eventId",
 };
 
 export default PATHS;

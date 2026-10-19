@@ -6,19 +6,19 @@ import EventDetailsCard from "@/containers/Widgets/EventCard/EventDetailsCard.ts
 
 import styles from "./EventsPage.module.scss";
 
-
 const EventPage = () => {
-  console.log('EventPage')
+  console.log("EventPage");
   const { eventId } = useParams();
-  const event = mockEvents.find(event => event.id === eventId);
-  console.log('event')
+  const event = mockEvents.find((event) => event.id === eventId);
+  console.log("event");
   return (
     <div className={styles.pageContainer}>
       <Stack spacing={3}>
-        { event
-          ? <EventDetailsCard event={event}/>
-          : <Alert severity="error">Мероприятие не найдено</Alert>
-        }
+        {event ? (
+          <EventDetailsCard event={event} />
+        ) : (
+          <Alert severity="error">Мероприятие не найдено</Alert>
+        )}
       </Stack>
     </div>
   );

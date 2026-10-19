@@ -10,16 +10,17 @@ on:
       - testing
       - test
 
+# Deploy job removed 2026-10: the server was decommissioned. See git history to restore.
 jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -37,35 +38,9 @@ jobs:
       - name: Build application
         run: npm run build:prod
 
-  resolve-env:
-    if: ${{ github.event_name != 'pull_request' }}
-    runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ steps.env.outputs.environment }}
-      environment_pascal: ${{ steps.env.outputs.environment_pascal }}
-    steps:
-      - id: env
-        shell: bash
-        run: |
-          REF="${{ github.ref_name }}"
-
-          if [[ "$REF" == "main" || "$REF" == "master" ]]; then
-            echo "environment=production" >> "$GITHUB_OUTPUT"
-            echo "environment_pascal=Production" >> "$GITHUB_OUTPUT"
-          elif [[ "$REF" == "stage" ]]; then
-            echo "environment=stage" >> "$GITHUB_OUTPUT"
-            echo "environment_pascal=Staging" >> "$GITHUB_OUTPUT"
-          elif [[ "$REF" == "testing" || "$REF" == "test" ]]; then
-            echo "environment=test" >> "$GITHUB_OUTPUT"
-            echo "environment_pascal=Test" >> "$GITHUB_OUTPUT"
-          else
-            echo "environment=development" >> "$GITHUB_OUTPUT"
-            echo "environment_pascal=Development" >> "$GITHUB_OUTPUT"
-          fi
-
   build:
     if: ${{ github.event_name != 'pull_request' }}
-    needs: [checks, resolve-env]
+    needs: [checks]
     uses: PANiXiDA-Infrastructure/ci-cd/.github/workflows/docker-build.yml@main
     with:
       service-folder: .
@@ -73,27 +48,3 @@ jobs:
     secrets:
       registry-user: ${{ secrets.REGISTRY_USER }}
       registry-token: ${{ secrets.REGISTRY_TOKEN }}
-
-  deploy:
-    if: ${{ github.event_name != 'pull_request' }}
-    needs: [build, resolve-env]
-    runs-on: ubuntu-latest
-    environment: ${{ needs.resolve-env.outputs.environment }}
-    steps:
-      - uses: PANiXiDA-Infrastructure/ci-cd/.github/actions/ssh-docker-deploy@main
-        with:
-          server-user: ${{ vars.SERVER_USER }}
-          server-host: ${{ vars.SERVER_HOST }}
-          ssh-port: ${{ vars.SERVER_SSH_PORT }}
-          ssh-private-key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
-
-          service-folder: ${{ vars.PROJECT_FOLDER }}/${{ github.event.repository.name }}/${{ vars.SERVICE_NAME }}
-
-          container-name: ${{ github.event.repository.name }}-${{ vars.SERVICE_NAME }}-${{ vars.ENV_SUFFIX }}
-          image: ${{ vars.REGISTRY_URL }}/${{ github.repository }}/${{ vars.SERVICE_NAME }}:${{ github.run_number }}
-
-          env-file: ${{ secrets.FRONTEND_ENV_FILE }}
-
-          registry-url: ${{ vars.REGISTRY_URL }}
-          registry-user: ${{ secrets.REGISTRY_USER }}
-          registry-token: ${{ secrets.REGISTRY_TOKEN }}

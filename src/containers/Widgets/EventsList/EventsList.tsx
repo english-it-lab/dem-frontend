@@ -35,7 +35,7 @@ const EventsList = ({ events }: EventsListProps) => {
       <Grid container spacing={3}>
         {eventsOnPage.map((event) => (
           <Grid size={{ xs: 12, sm: 6, md: 4, lg: 4 }} key={event.id}>
-            <EventCard event={event} onClick={handleCardClick}/>
+            <EventCard event={event} onClick={handleCardClick} />
           </Grid>
         ))}
       </Grid>
