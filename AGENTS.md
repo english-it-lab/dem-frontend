@@ -53,7 +53,7 @@ back to Vite `import.meta.env`. Empty values count as unset.
 ## Where things live
 
 ```
-src/index.tsx, src/App.tsx          entry; Provider → BrowserRouter → Header + Layout + LocalStorageSaver
+src/index.tsx, src/App.tsx          entry; Provider → BrowserRouter → Layout + LocalStorageSaver
 src/api/axios.api.ts                the single axios instance; attaches Bearer token from localStorage
 src/config/app-config.ts            apiBaseUrl, adminPageEnabled, authEnabled
 src/constants/paths.ts              PATHS — the only place route strings are defined
