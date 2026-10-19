@@ -33,13 +33,22 @@ const AuthPage = () => {
 
   return (
     <div>
-      {policies && <PolicyPage setPolicies={setPolicies}/>}
-      {terms && <TermsOfUsagePage setTerms={setTerms}/>}
-      {!terms && !policies && <div className={styles.authPageContainer}>
-      {mode ? <RegForm setMode={setMode} setTerms={setTerms} setPolicies={setPolicies} /> : <AuthForm setMode={setMode} />}
-    </div>}
+      {policies && <PolicyPage setPolicies={setPolicies} />}
+      {terms && <TermsOfUsagePage setTerms={setTerms} />}
+      {!terms && !policies && (
+        <div className={styles.authPageContainer}>
+          {mode ? (
+            <RegForm
+              setMode={setMode}
+              setTerms={setTerms}
+              setPolicies={setPolicies}
+            />
+          ) : (
+            <AuthForm setMode={setMode} />
+          )}
+        </div>
+      )}
     </div>
-    
   );
 };
 

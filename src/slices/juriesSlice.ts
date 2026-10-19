@@ -154,8 +154,6 @@ export const { clearJuriesError, setJuriesError } = juriesSlice.actions;
 
 export default juriesSlice.reducer;
 
-
-
 const handleSubmit = async () => {
   const normalizedName = name.trim();
   if (!normalizedName) {

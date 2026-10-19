@@ -16,7 +16,6 @@ import type { IEvent } from "@/interfaces/eventInterface";
 
 import styles from "./EventDetailsCard.module.scss";
 
-
 type EventDetailsCardProps = {
   event: IEvent;
 };
@@ -73,7 +72,11 @@ const EventDetailsCard = ({ event }: EventDetailsCardProps) => {
           </Typography>
           <Grid container spacing={3} sx={{ mt: 1 }}>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                gutterBottom
+              >
                 Целевые факультеты:
               </Typography>
               <Box className={styles.chipsContainer}>
@@ -83,17 +86,30 @@ const EventDetailsCard = ({ event }: EventDetailsCardProps) => {
               </Box>
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                gutterBottom
+              >
                 Курсы:
               </Typography>
               <Box className={styles.chipsContainer}>
                 {event.registrationFields.courses.map((c) => (
-                  <Chip key={c} label={`${c} курс`} size="small" variant="outlined" />
+                  <Chip
+                    key={c}
+                    label={`${c} курс`}
+                    size="small"
+                    variant="outlined"
+                  />
                 ))}
               </Box>
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                gutterBottom
+              >
                 Преподаватели / руководители:
               </Typography>
               <Box className={styles.chipsContainer}>
