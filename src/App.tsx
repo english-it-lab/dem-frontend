@@ -1,7 +1,6 @@
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import Header from "@/components/Header";
 import LocalStorageSaver from "@/containers/helpers/LocalStorageSaver";
 import Layout from "@/containers/Layout";
 import { setupStore } from "@/store/store";
@@ -12,7 +11,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Header />
         <Layout />
         <LocalStorageSaver />
       </BrowserRouter>

@@ -82,7 +82,7 @@ export default tseslint.config([
         },
       ],
       "react-hooks/exhaustive-deps": "warn",
-      "react-hooks/rules-of-hooks": "warn",
+      "react-hooks/rules-of-hooks": "error",
     },
   },
 ]);

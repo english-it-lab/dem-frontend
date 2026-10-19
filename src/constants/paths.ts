@@ -8,7 +8,6 @@ const PATHS = {
   ADMIN_JURIES: "/admin/juries",
   ADMIN_UNIVERSITIES: "/admin/universities",
   ADMIN_USERS: "/admin/users",
-  ROLES: "/roles",
   EVENTS: "/events",
   POLICY: "/policy",
   TERMS: "/terms",
