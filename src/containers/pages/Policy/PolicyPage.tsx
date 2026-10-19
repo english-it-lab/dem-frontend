@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import {
   Box,
   Paper,
@@ -7,7 +8,6 @@ import {
   ListItemText,
   Button,
 } from "@mui/material";
-import type { Dispatch, SetStateAction } from "react";
 
 type PolicyPageProps = {
   setPolicies: Dispatch<SetStateAction<boolean>> | null;

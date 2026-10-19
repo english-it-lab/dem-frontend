@@ -7,6 +7,7 @@ import { authEnabled } from "@/config/app-config";
 import PATHS from "@/constants/paths";
 import { useAppSelector } from "@/hooks/redux_hooks";
 import styles from "@/styles/AuthPage.module.scss";
+
 import PolicyPage from "./Policy/PolicyPage";
 import TermsOfUsagePage from "./Policy/TermsOfUsage";
 

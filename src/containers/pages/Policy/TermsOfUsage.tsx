@@ -1,5 +1,5 @@
-import { Box, Paper, Typography, List, ListItem, Button } from "@mui/material";
 import type { Dispatch, SetStateAction } from "react";
+import { Box, Paper, Typography, List, ListItem, Button } from "@mui/material";
 
 type TermsPageProps = {
   setTerms: Dispatch<SetStateAction<boolean>> | null;
